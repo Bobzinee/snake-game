@@ -24,11 +24,117 @@
             width: 100vw;
             background-color: salmon;
         }
+        #score{
+            padding: 20px 0px;
+            margin: 20px 0px;
+        }
+
+        #canvas{
+            margin: 30px 0px;
+        }
+        .container {
+            width: 20vw;
+            height: 30vh;
+        }
+
+        .start-button{
+            background-color: snow;
+            border: none;
+            color: salmon;
+            padding: 8px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin: 10px 2px;
+            cursor: pointer;
+            border: 2px solid salmon;
+            border-radius: 4px;
+            margin: 30px 0px;
+        }
+
+        .slide-container{
+            width: 100%;
+        }
+
+        .slider{
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: 0.2s;
+            transition: opacity 0.2s;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%; 
+            background: #04AA6D;
+            cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #04AA6D;
+            cursor: pointer;
+        }
+        #text-size{
+            color: snow;
+            font-weight: bolder;
+            font-size: 1.2rem;
+        }
+        #text-speed{
+                  color: snow;
+            font-weight: bolder;
+            font-size: 1.2rem;
+        }
+
+        #border{
+            position: absolute;
+            z-index: -1;
+            width: 300px;
+            height: 300px;
+            border: 2px solid snow;
+        }
+
+        @media screen and (max-width: 320px){
+            #canvas {
+                padding: 0px;
+                margin: 30px 0px;
+                width: 100vmin;
+                height: 100vmin;
+            }
+
+            .container{
+                width: 60vw;
+                height: 30vh;
+            }
+            
+        }
+
     </style>
 </head>
 <body>
     <h1 id="score"></h1>
     <canvas id="canvas"></canvas>
+    <div id="border"></div>
+    <div class="container">
+        <button class="start-button" id="start-button">Start</button>
+        <div class="slide-container">
+            <input type="range" min="10" max="35" value="30" class="slider" id="slider">
+            <span id="text-size">Size: 30</span>
+
+            <input type="range" min="10" max="40" value="25" class="slider" id="speed-slider">
+            <span id="text-speed">Speed: 25</span>
+        </div>
+    </div> 
 </body>
-<script src="bundle.js"></script>
+<script src="./dist/bundle.js"></script>
 </html>
