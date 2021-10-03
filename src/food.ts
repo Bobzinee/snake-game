@@ -7,10 +7,12 @@ export default class Food{
         this.board = board;
     }
 
+    //Randomly generate food anywhere within the bounds of the game board...
     public generateFood(): void{
-        let row = Number(Math.abs(Math.round(Math.random() * this.board.length - 2)));
-        let col = Number(Math.abs(Math.round(Math.random() * this.board.length - 2)));
-        while(this.board[row][col] === CellType.SNAKE){
+        let row = Math.abs(Math.round(Math.random() * this.board.length - 2));
+        let col = Math.abs(Math.round(Math.random() * this.board.length - 2));
+        // If generated food is on the snake, run the function again...
+        if(this.board[row][col] === CellType.SNAKE){
             this.generateFood();  
         }
         this.board[row][col] = CellType.FOOD;

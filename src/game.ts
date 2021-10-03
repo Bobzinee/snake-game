@@ -5,9 +5,10 @@ let isPlaying: boolean = true;
 let direction: Direction = Direction.UP;
 let score: number = 0;
 
-export function drawGame(board: any, snake: SnakeShape[], size: number){
+export function drawGame(board: any, snake: SnakeShape[]){
     let canvas = <HTMLCanvasElement> document.getElementById("canvas");
     let context = canvas.getContext("2d");
+    let size = board.length;
     let canvasSize = size * 10;
     let head = 0;
     let tail = snake.length - 1;
@@ -17,6 +18,7 @@ export function drawGame(board: any, snake: SnakeShape[], size: number){
     for(let i = tail; i >= 0; i--){
         //Handle head...
         if(i === head){
+            //Move coordinate of snake head in the current direction...
             if(direction === Direction.RIGHT){
                 snake[head] = {x: snake[head].x + 1, y: snake[head].y}
             } else if(direction === Direction.LEFT){
@@ -26,6 +28,7 @@ export function drawGame(board: any, snake: SnakeShape[], size: number){
             } else if(direction === Direction.DOWN){
                 snake[head] = {x: snake[head].x, y: snake[head].y + 1}
             }
+            //Check if head collided with boundary...
             if(snake[head].x < 0 ||
                snake[head].x >= size ||
                snake[head].y < 0 ||
@@ -34,10 +37,12 @@ export function drawGame(board: any, snake: SnakeShape[], size: number){
                 gameOver();
                 return; 
             }
+            //Check if snake hit itself...
             if(board[snake[head].x][snake[head].y] === CellType.SNAKE){
                 gameOver();
                 return;
             }
+            //Check if snake ate food...
             if(board[snake[head].x][snake[head].y] === CellType.FOOD){
                 score = score + 10;
                 new Food(board).generateFood();
@@ -46,12 +51,16 @@ export function drawGame(board: any, snake: SnakeShape[], size: number){
             }
             board[snake[head].x][snake[head].y] = CellType.SNAKE;
         } else{
+            //Handle tail...
             if(i === tail){
                 board[snake[i].x][snake[i].y] = CellType.EMPTY; 
             }
+            // Shift the coordinates of the tail to take the one preceding it...
             snake[i] = {x: snake[i - 1].x, y: snake[i - 1].y};
             board[snake[i].x][snake[i].y] = CellType.SNAKE;
         }
+
+            //Paint each cell of the grid according to the cell-type...
         for(let i = 0; i < board.length; i++){
             for(let j = 0; j < board.length; j++){
                 if(board[i][j] === CellType.FOOD){
@@ -73,9 +82,6 @@ export function drawGame(board: any, snake: SnakeShape[], size: number){
     function gameOver(){
         isPlaying = false;
         context?.clearRect(0,0,canvasSize,canvasSize);
-        context!.fillStyle = 'black';
-        context!.font = '16px sans-serif';
-        context!.fillText('Game Over!', ((canvasSize / 2) - (context!.measureText('Game Over!').width / 2)), size/2);
     }
 
 }
